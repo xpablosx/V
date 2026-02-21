@@ -36,7 +36,7 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-    background-color: var(--color-black);
+    background-color: rgb(0, 0, 0);
     color: var(--color-white);
     line-height: 1.6;
     overflow-x: hidden;
@@ -66,7 +66,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-black);
+    background-color:transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,16 +111,16 @@ body::before {
 }
 
 /* ============================================
-   SIDEBAR (FIXA À DIREITA)
+   SIDEBAR (DINÂMICA)
    ============================================ */
 
 .sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
+    position: fixed;  /* Mudança: começa como relative */
+    right: 50000px;
+    top: 0px;
     width: 320px;
-    height: 100vh;
-    background-color: rgba(11, 11, 11, 0.98);
+    height: auto;        /* Mudança: altura automática no fluxo normal */
+    background-color: rgba(0, 0, 0, 0.98);
     backdrop-filter: blur(10px);
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     z-index: var(--z-sidebar);
@@ -128,6 +128,18 @@ body::before {
     flex-direction: column;
     overflow: hidden;
     animation: sidebarSlideIn 0.6s ease-out;
+    transition: position 0.3s ease-out, height 0.3s ease-out;
+}
+
+/* NOVO: Estado quando a sidebar fica fixa após scrollar do hero */
+.sidebar.is-fixed {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 320px;
+    overflow-y: auto;
+    z-index: var(--z-sidebar);
 }
 
 @keyframes sidebarSlideIn {
@@ -143,7 +155,7 @@ body::before {
 
 .sidebar-header {
     padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -214,18 +226,23 @@ body::before {
     position: fixed;
     top: 0;
     left: 0;
-    right: 320px;
+    right: 0;            /* Mudança: começa ocupando 100% no hero */
     height: 70px;
     background-color: transparent;
     z-index: var(--z-navbar);
-    transition: background-color 0.3s ease-out, backdrop-filter 0.3s ease-out;
+    transition: background-color 0.3s ease-out, backdrop-filter 0.3s ease-out, right 0.3s ease-out;
     backdrop-filter: blur(0px);
 }
 
+/* Quando a sidebar fica fixa, o navbar se ajusta */
+body.sidebar-fixed .navbar {
+    right: 320px;
+}
+
 .navbar.scrolled {
-    background-color: rgba(11, 11, 11, 0.95);
+    background-color: transparent;
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 20px rgba(53, 53, 53, 0.5);
 }
 
 .navbar-content {
@@ -289,7 +306,7 @@ body::before {
 
 .hero {
     position: relative;
-    width: calc(100% - 320px);
+    width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -298,7 +315,6 @@ body::before {
     overflow: hidden;
     margin-top: -70px;
     padding-top: 70px;
-    margin-right: 320px;
 }
 
 .hero-bg {
@@ -376,19 +392,24 @@ body::before {
 
 .timeline-section {
     position: relative;
-    width: calc(100% - 320px);
+    width: 100%;          /* Começa com 100% no fluxo normal */
     padding: 120px 0;
     background-color: var(--color-black);
+    margin-right: 0;
+    transition: width 0.3s ease-out, margin-right 0.3s ease-out;
+}
+
+/* Ajuste quando a sidebar fica fixa */
+body.sidebar-fixed .timeline-section {
+    width: calc(100% - 320px);
     margin-right: 320px;
 }
 
 .timeline-container {
-    width: 100%;
-    max-width: 1200px;
     position: relative;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 40px;
-    box-sizing: border-box;
 }
 
 /* Timeline Items Container */
@@ -699,6 +720,13 @@ body::before {
     padding: 60px 0;
     background-color: var(--color-gray-dark);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-right: 0;
+    transition: width 0.3s ease-out, margin-right 0.3s ease-out;
+}
+
+/* Ajuste quando a sidebar fica fixa */
+body.sidebar-fixed .footer {
+    width: calc(100% - 320px);
     margin-right: 320px;
 }
 
@@ -732,13 +760,18 @@ body::before {
         width: 280px;
     }
 
-    .navbar {
-        right: 280px;
+    .sidebar.is-fixed {
+        width: 280px;
     }
 
-    .timeline-section,
-    .footer {
+    body.sidebar-fixed .timeline-section,
+    body.sidebar-fixed .footer {
         margin-right: 280px;
+        width: calc(100% - 280px);
+    }
+
+    body.sidebar-fixed .navbar {
+        right: 280px;
     }
 }
 
@@ -747,6 +780,7 @@ body::before {
         position: fixed;
         right: -100%;
         width: 100%;
+        height: 100vh;
         transition: right 0.4s ease-out;
     }
 
@@ -754,13 +788,22 @@ body::before {
         right: 0;
     }
 
+    .sidebar.is-fixed {
+        position: fixed;
+        right: 0;
+        width: 100%;
+    }
+
     .navbar {
         right: 0;
     }
 
-    .timeline-section,
-    .footer {
+    body.sidebar-fixed .timeline-section,
+    body.sidebar-fixed .footer,
+    body.sidebar-relative .timeline-section,
+    body.sidebar-relative .footer {
         margin-right: 0;
+        width: 100%;
     }
 
     .navbar-content {
@@ -801,6 +844,10 @@ body::before {
 
 @media (max-width: 480px) {
     .sidebar {
+        width: 100%;
+    }
+
+    .sidebar.is-fixed {
         width: 100%;
     }
 
