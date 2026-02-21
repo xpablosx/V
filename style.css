@@ -1,0 +1,945 @@
+/* ============================================
+   CONFIGURAÇÃO CUSTOMIZÁVEL
+   ============================================ */
+
+:root {
+    /* HERO BACKGROUND - CUSTOMIZE AQUI */
+    --hero-bg-image: url('hero-bg.jfif');
+    --hero-blur: 15px;
+    --hero-brightness: 0.6;
+    
+    /* CORES */
+    --color-black: #0b0b0b;
+    --color-white: #ffffff;
+    --color-gray-light: #f5f5f5;
+    --color-gray-dark: #1a1a1a;
+    --color-gray-medium: #2a2a2a;
+    
+    /* TRANSIÇÕES */
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-fast: all 0.2s ease-out;
+    
+    /* Z-INDEX */
+    --z-loader: 9999;
+    --z-navbar: 1000;
+    --z-sidebar: 950;
+}
+
+/* ============================================
+   RESET E ESTILOS GLOBAIS
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2' /%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ============================================
+   LOADER
+   ============================================ */
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-loader);
+    opacity: 1;
+    transition: opacity 0.6s ease-out 0.4s, visibility 0.6s ease-out 0.4s;
+    visibility: visible;
+}
+
+.loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.loader-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-white);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: loaderPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loaderPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* ============================================
+   SIDEBAR (FIXA À DIREITA)
+   ============================================ */
+
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 320px;
+    height: 100vh;
+    background-color: rgba(11, 11, 11, 0.98);
+    backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: var(--z-sidebar);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: sidebarSlideIn 0.6s ease-out;
+}
+
+@keyframes sidebarSlideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.hino-text {
+    font-size: 12px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.hino-text::-webkit-scrollbar {
+    width: 4px;
+}
+
+.hino-text::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.hino-text::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+.hino-text::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-audio-btn {
+    padding: 12px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sidebar-audio-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 320px);
+    height: 70px;
+    background-color: transparent;
+    z-index: var(--z-navbar);
+    transition: background-color 0.3s ease-out, backdrop-filter 0.3s ease-out;
+    backdrop-filter: blur(0px);
+}
+
+.navbar.scrolled {
+    background-color: rgba(11, 11, 11, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-content {
+    max-width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--color-white);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.navbar-logo:hover {
+    opacity: 0.7;
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.navbar-menu a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transition-fast);
+    position: relative;
+    cursor: pointer;
+}
+
+.navbar-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-white);
+    transition: width 0.3s ease-out;
+}
+
+.navbar-menu a:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-black);
+    overflow: hidden;
+    margin-top: -70px;
+    padding-top: 70px;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--hero-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(var(--hero-blur)) brightness(var(--hero-brightness));
+    z-index: 0;
+}
+
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(11, 11, 11, 0) 0%,
+        rgba(11, 11, 11, 0.1) 20%,
+        rgba(11, 11, 11, 0.3) 40%,
+        rgba(11, 11, 11, 0.5) 60%,
+        rgba(11, 11, 11, 0.8) 80%,
+        rgba(11, 11, 11, 1) 100%
+    );
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    animation: heroFadeIn 1.2s ease-out 0.3s both;
+}
+
+.hero-title {
+    font-size: clamp(80px, 15vw, 200px);
+    font-weight: 900;
+    letter-spacing: 20px;
+    color: var(--color-white);
+    margin-bottom: 0;
+    text-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    animation: heroScale 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes heroScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   TIMELINE SECTION
+   ============================================ */
+
+.timeline-section {
+    position: relative;
+    width: 100%;
+    padding: 120px 0;
+    background-color: var(--color-black);
+    margin-right: 320px;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Timeline SVG */
+.timeline-svg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    height: 100%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+.timeline-path {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+    animation: timelinePathAnimation 2s ease-out forwards;
+}
+
+@keyframes timelinePathAnimation {
+    from {
+        stroke-dasharray: 5000;
+        stroke-dashoffset: 5000;
+    }
+    to {
+        stroke-dasharray: 5000;
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Timeline Items Container */
+.timeline-items {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+/* Individual Timeline Item */
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    opacity: 0;
+    animation: timelineItemFadeIn 0.8s ease-out forwards;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+@keyframes timelineItemFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(6) { animation-delay: 0.6s; }
+.timeline-item:nth-child(7) { animation-delay: 0.7s; }
+.timeline-item:nth-child(8) { animation-delay: 0.8s; }
+.timeline-item:nth-child(9) { animation-delay: 0.9s; }
+.timeline-item:nth-child(10) { animation-delay: 1s; }
+.timeline-item:nth-child(11) { animation-delay: 1.1s; }
+.timeline-item:nth-child(12) { animation-delay: 1.2s; }
+.timeline-item:nth-child(13) { animation-delay: 1.3s; }
+.timeline-item:nth-child(14) { animation-delay: 1.4s; }
+.timeline-item:nth-child(15) { animation-delay: 1.5s; }
+
+/* Timeline Content */
+.timeline-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Timeline Image Base */
+.timeline-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 2px;
+    background-color: var(--color-gray-dark);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Timeline Text */
+.timeline-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.timeline-text h3 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--color-white);
+}
+
+.timeline-text p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================
+   15 INTERAÇÕES ÚNICAS - INSPIRADAS NO LANDO NORRIS
+   ============================================ */
+
+/* 1. FADE REVEAL */
+.fade-reveal .timeline-image {
+    animation: fadeReveal 1.2s ease-out forwards;
+}
+
+@keyframes fadeReveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 2. SLIDE IN */
+.slide-in .timeline-image {
+    animation: slideInImage 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes slideInImage {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 3. ZOOM BLUR */
+.zoom-blur .timeline-image {
+    animation: zoomBlur 1.5s ease-out forwards;
+}
+
+@keyframes zoomBlur {
+    from {
+        opacity: 0;
+        transform: scale(1.3);
+        filter: blur(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+/* 4. ROTATE REVEAL */
+.rotate-reveal .timeline-image {
+    animation: rotateReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes rotateReveal {
+    from {
+        opacity: 0;
+        transform: rotate(-10deg) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+}
+
+/* 5. CLIP PATH REVEAL */
+.clip-reveal .timeline-image {
+    animation: clipPathReveal 1s ease-out forwards;
+}
+
+@keyframes clipPathReveal {
+    from {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+        opacity: 0;
+    }
+    to {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        opacity: 1;
+    }
+}
+
+/* 6. SCALE BLOOM */
+.scale-bloom .timeline-image {
+    animation: scaleBloom 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes scaleBloom {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+        filter: brightness(1.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+/* 7. GLITCH DISTORTION */
+.glitch-distort .timeline-image {
+    animation: glitchDistort 0.8s ease-out forwards;
+}
+
+@keyframes glitchDistort {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+        filter: hue-rotate(90deg);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        filter: hue-rotate(0deg);
+    }
+}
+
+/* 8. WAVE DISTORTION */
+.wave-distort .timeline-image {
+    animation: waveDistort 1.5s ease-out forwards;
+}
+
+@keyframes waveDistort {
+    from {
+        opacity: 0;
+        transform: skewY(5deg);
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        transform: skewY(0);
+        filter: blur(0);
+    }
+}
+
+/* 9. BLUR REVEAL */
+.blur-reveal .timeline-image {
+    animation: blurReveal 1.2s ease-out forwards;
+}
+
+@keyframes blurReveal {
+    from {
+        opacity: 0;
+        filter: blur(20px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* 10. PULSE GLOW */
+.pulse-glow .timeline-image {
+    animation: pulseGlow 1.5s ease-out forwards;
+}
+
+@keyframes pulseGlow {
+    from {
+        opacity: 0;
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+    }
+    to {
+        opacity: 1;
+        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+    }
+}
+
+/* 11. TILT SHIFT */
+.tilt-shift .timeline-image {
+    animation: tiltShift 1.3s ease-out forwards;
+}
+
+@keyframes tiltShift {
+    from {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(20deg);
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0);
+        filter: blur(0);
+    }
+}
+
+/* 12. LIQUID SWIPE */
+.liquid-swipe .timeline-image {
+    animation: liquidSwipe 1.2s ease-out forwards;
+}
+
+@keyframes liquidSwipe {
+    from {
+        opacity: 0;
+        clip-path: polygon(0 50%, 0 50%, 0 50%, 0 50%);
+    }
+    to {
+        opacity: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+/* 13. SPOTLIGHT REVEAL */
+.spotlight-reveal .timeline-image {
+    animation: spotlightReveal 1.4s ease-out forwards;
+    position: relative;
+}
+
+.spotlight-reveal .timeline-image::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: spotlightMove 1.4s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes spotlightReveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes spotlightMove {
+    from {
+        width: 0;
+        height: 0;
+    }
+    to {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* 14. SKEW REVEAL */
+.skew-reveal .timeline-image {
+    animation: skewReveal 1.1s ease-out forwards;
+}
+
+@keyframes skewReveal {
+    from {
+        opacity: 0;
+        transform: skewX(20deg);
+    }
+    to {
+        opacity: 1;
+        transform: skewX(0);
+    }
+}
+
+/* 15. 3D FLIP */
+.flip-3d .timeline-image {
+    animation: flip3D 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes flip3D {
+    from {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(90deg);
+    }
+    to {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(0);
+    }
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+    position: relative;
+    width: 100%;
+    padding: 60px 0;
+    background-color: var(--color-gray-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-right: 320px;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.footer-text {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    color: var(--color-white);
+}
+
+.footer-year {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 280px;
+    }
+
+    .navbar {
+        width: calc(100% - 280px);
+    }
+
+    .timeline-section,
+    .footer {
+        margin-right: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        right: -100%;
+        width: 100%;
+        transition: right 0.4s ease-out;
+    }
+
+    .sidebar.active {
+        right: 0;
+    }
+
+    .navbar {
+        width: 100%;
+    }
+
+    .timeline-section,
+    .footer {
+        margin-right: 0;
+    }
+
+    .navbar-content {
+        padding: 0 20px;
+    }
+
+    .navbar-menu {
+        gap: 20px;
+    }
+
+    .navbar-menu a {
+        font-size: 12px;
+    }
+
+    .timeline-container {
+        padding: 0 20px;
+    }
+
+    .timeline-items {
+        gap: 80px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        flex-direction: column;
+        gap: 30px;
+        padding-left: 40px;
+    }
+
+    .timeline-svg {
+        left: 0;
+    }
+
+    .timeline-text h3 {
+        font-size: 16px;
+    }
+
+    .timeline-text p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+    }
+
+    .navbar-content {
+        padding: 0 15px;
+    }
+
+    .navbar-menu {
+        gap: 15px;
+    }
+
+    .navbar-menu a {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    .timeline-section {
+        padding: 80px 0;
+    }
+
+    .timeline-items {
+        gap: 60px;
+    }
+
+    .timeline-item {
+        padding-left: 30px;
+    }
+
+    .footer {
+        padding: 40px 0;
+    }
+}
