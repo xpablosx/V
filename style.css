@@ -309,7 +309,7 @@ body::before {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    filter: blur(15px) brightness(0.6);
+    filter: brightness(0.6);
     z-index: 0;
 }
 
