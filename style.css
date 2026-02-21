@@ -3,11 +3,6 @@
    ============================================ */
 
 :root {
-    /* HERO BACKGROUND - CUSTOMIZE AQUI */
-    --hero-bg-image: url('hero-bg.jfif');
-    --hero-blur: 15px;
-    --hero-brightness: 0.6;
-    
     /* CORES */
     --color-black: #0b0b0b;
     --color-white: #ffffff;
@@ -219,7 +214,7 @@ body::before {
     position: fixed;
     top: 0;
     left: 0;
-    width: calc(100% - 320px);
+    right: 320px;
     height: 70px;
     background-color: transparent;
     z-index: var(--z-navbar);
@@ -311,11 +306,10 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: var(--hero-bg-image);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    filter: blur(var(--hero-blur)) brightness(var(--hero-brightness));
+    filter: blur(15px) brightness(0.6);
     z-index: 0;
 }
 
@@ -389,37 +383,9 @@ body::before {
 
 .timeline-container {
     position: relative;
-    max-width: 700px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 40px;
-}
-
-/* Timeline SVG */
-.timeline-svg {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 100px;
-    height: 100%;
-    transform: translateX(-50%);
-    z-index: 0;
-}
-
-.timeline-path {
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
-    animation: timelinePathAnimation 2s ease-out forwards;
-}
-
-@keyframes timelinePathAnimation {
-    from {
-        stroke-dasharray: 5000;
-        stroke-dashoffset: 5000;
-    }
-    to {
-        stroke-dasharray: 5000;
-        stroke-dashoffset: 0;
-    }
 }
 
 /* Timeline Items Container */
@@ -427,15 +393,15 @@ body::before {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 100px;
+    gap: 120px;
 }
 
 /* Individual Timeline Item */
 .timeline-item {
     position: relative;
     display: flex;
-    align-items: center;
-    gap: 60px;
+    align-items: flex-start;
+    gap: 80px;
     opacity: 0;
     animation: timelineItemFadeIn 0.8s ease-out forwards;
 }
@@ -493,6 +459,8 @@ body::before {
     background-color: var(--color-gray-dark);
     background-size: cover;
     background-position: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
 }
 
 /* Timeline Text */
@@ -500,6 +468,8 @@ body::before {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1;
+    justify-content: center;
 }
 
 .timeline-text h3 {
@@ -516,282 +486,204 @@ body::before {
 }
 
 /* ============================================
-   15 INTERAÇÕES ÚNICAS - INSPIRADAS NO LANDO NORRIS
+   INTERAÇÕES ESPECÍFICAS
    ============================================ */
 
-/* 1. FADE REVEAL */
-.fade-reveal .timeline-image {
-    animation: fadeReveal 1.2s ease-out forwards;
+/* 1. CLICK TO REVEAL */
+.click-reveal .timeline-image {
+    background-color: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@keyframes fadeReveal {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.reveal-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: var(--transition-smooth);
 }
 
-/* 2. SLIDE IN */
-.slide-in .timeline-image {
-    animation: slideInImage 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+.reveal-text {
+    color: var(--color-white);
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: var(--transition-smooth);
 }
 
-@keyframes slideInImage {
-    from {
-        opacity: 0;
-        transform: translateX(-60px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.click-reveal .timeline-image:hover .reveal-overlay {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
 }
 
-/* 3. ZOOM BLUR */
-.zoom-blur .timeline-image {
-    animation: zoomBlur 1.5s ease-out forwards;
+.click-reveal .timeline-image:hover .reveal-text {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
-@keyframes zoomBlur {
-    from {
-        opacity: 0;
-        transform: scale(1.3);
-        filter: blur(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0);
-    }
+.click-reveal .timeline-image.revealed {
+    background-color: var(--color-gray-dark);
 }
 
-/* 4. ROTATE REVEAL */
-.rotate-reveal .timeline-image {
-    animation: rotateReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+.click-reveal .timeline-image.revealed .reveal-overlay {
+    display: none;
 }
 
-@keyframes rotateReveal {
-    from {
-        opacity: 0;
-        transform: rotate(-10deg) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: rotate(0) scale(1);
-    }
+/* 2. HOVER ZOOM */
+.hover-zoom .timeline-image {
+    transition: var(--transition-smooth);
 }
 
-/* 5. CLIP PATH REVEAL */
-.clip-reveal .timeline-image {
-    animation: clipPathReveal 1s ease-out forwards;
+.hover-zoom .timeline-image:hover {
+    transform: scale(1.08);
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
 }
 
-@keyframes clipPathReveal {
-    from {
-        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-        opacity: 0;
-    }
-    to {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-        opacity: 1;
-    }
+/* 3. CAROUSEL 3D */
+.carousel-3d .timeline-image {
+    display: none;
 }
 
-/* 6. SCALE BLOOM */
-.scale-bloom .timeline-image {
-    animation: scaleBloom 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-@keyframes scaleBloom {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-        filter: brightness(1.5);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-        filter: brightness(1);
-    }
-}
-
-/* 7. GLITCH DISTORTION */
-.glitch-distort .timeline-image {
-    animation: glitchDistort 0.8s ease-out forwards;
-}
-
-@keyframes glitchDistort {
-    0% {
-        opacity: 0;
-        transform: translateX(-10px);
-        filter: hue-rotate(90deg);
-    }
-    50% {
-        transform: translateX(5px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-        filter: hue-rotate(0deg);
-    }
-}
-
-/* 8. WAVE DISTORTION */
-.wave-distort .timeline-image {
-    animation: waveDistort 1.5s ease-out forwards;
-}
-
-@keyframes waveDistort {
-    from {
-        opacity: 0;
-        transform: skewY(5deg);
-        filter: blur(10px);
-    }
-    to {
-        opacity: 1;
-        transform: skewY(0);
-        filter: blur(0);
-    }
-}
-
-/* 9. BLUR REVEAL */
-.blur-reveal .timeline-image {
-    animation: blurReveal 1.2s ease-out forwards;
-}
-
-@keyframes blurReveal {
-    from {
-        opacity: 0;
-        filter: blur(20px);
-    }
-    to {
-        opacity: 1;
-        filter: blur(0);
-    }
-}
-
-/* 10. PULSE GLOW */
-.pulse-glow .timeline-image {
-    animation: pulseGlow 1.5s ease-out forwards;
-}
-
-@keyframes pulseGlow {
-    from {
-        opacity: 0;
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
-    }
-    to {
-        opacity: 1;
-        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
-    }
-}
-
-/* 11. TILT SHIFT */
-.tilt-shift .timeline-image {
-    animation: tiltShift 1.3s ease-out forwards;
-}
-
-@keyframes tiltShift {
-    from {
-        opacity: 0;
-        transform: perspective(1000px) rotateX(20deg);
-        filter: blur(10px);
-    }
-    to {
-        opacity: 1;
-        transform: perspective(1000px) rotateX(0);
-        filter: blur(0);
-    }
-}
-
-/* 12. LIQUID SWIPE */
-.liquid-swipe .timeline-image {
-    animation: liquidSwipe 1.2s ease-out forwards;
-}
-
-@keyframes liquidSwipe {
-    from {
-        opacity: 0;
-        clip-path: polygon(0 50%, 0 50%, 0 50%, 0 50%);
-    }
-    to {
-        opacity: 1;
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
-}
-
-/* 13. SPOTLIGHT REVEAL */
-.spotlight-reveal .timeline-image {
-    animation: spotlightReveal 1.4s ease-out forwards;
+.carousel-container {
     position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 2px;
+    background-color: var(--color-gray-dark);
+    perspective: 1000px;
 }
 
-.spotlight-reveal .timeline-image::before {
+.carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: carouselRotate 6s linear infinite;
+}
+
+.carousel-item-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transform-origin: center;
+}
+
+.carousel-item-img:nth-child(1) {
+    transform: rotateY(0deg) translateZ(150px);
+}
+
+.carousel-item-img:nth-child(2) {
+    transform: rotateY(120deg) translateZ(150px);
+}
+
+.carousel-item-img:nth-child(3) {
+    transform: rotateY(240deg) translateZ(150px);
+}
+
+@keyframes carouselRotate {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+/* 4. HOVER GLOW */
+.hover-glow .timeline-image {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2);
+    transition: var(--transition-smooth);
+}
+
+.hover-glow .timeline-image:hover {
+    box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* 5. SCROLL REVEAL */
+.scroll-reveal .timeline-image {
+    opacity: 0;
+    animation: scrollReveal 1s ease-out forwards;
+}
+
+@keyframes scrollReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 6. HOVER TILT */
+.hover-tilt .timeline-image {
+    transition: var(--transition-smooth);
+}
+
+.hover-tilt .timeline-image:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+}
+
+/* 7. HOVER BLUR */
+.hover-blur .timeline-image {
+    transition: var(--transition-smooth);
+}
+
+.hover-blur .timeline-image:hover {
+    filter: blur(2px);
+}
+
+.hover-blur .timeline-image:hover::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: spotlightMove 1.4s ease-out forwards;
-    pointer-events: none;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.05);
+    animation: blurPulse 0.6s ease-out;
 }
 
-@keyframes spotlightReveal {
+@keyframes blurPulse {
     from {
-        opacity: 0;
-    }
-    to {
         opacity: 1;
     }
-}
-
-@keyframes spotlightMove {
-    from {
-        width: 0;
-        height: 0;
-    }
     to {
-        width: 200px;
-        height: 200px;
-    }
-}
-
-/* 14. SKEW REVEAL */
-.skew-reveal .timeline-image {
-    animation: skewReveal 1.1s ease-out forwards;
-}
-
-@keyframes skewReveal {
-    from {
         opacity: 0;
-        transform: skewX(20deg);
-    }
-    to {
-        opacity: 1;
-        transform: skewX(0);
     }
 }
 
-/* 15. 3D FLIP */
-.flip-3d .timeline-image {
-    animation: flip3D 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+/* 8. HOVER SCALE */
+.hover-scale .timeline-image {
+    transition: var(--transition-smooth);
 }
 
-@keyframes flip3D {
-    from {
-        opacity: 0;
-        transform: perspective(1000px) rotateY(90deg);
-    }
-    to {
-        opacity: 1;
-        transform: perspective(1000px) rotateY(0);
-    }
+.hover-scale .timeline-image:hover {
+    transform: scale(1.05);
+}
+
+/* 9. HOVER ROTATE */
+.hover-rotate .timeline-image {
+    transition: var(--transition-smooth);
+}
+
+.hover-rotate .timeline-image:hover {
+    transform: rotate(2deg);
+}
+
+/* 10. HOVER SKEW */
+.hover-skew .timeline-image {
+    transition: var(--transition-smooth);
+}
+
+.hover-skew .timeline-image:hover {
+    transform: skewY(2deg);
 }
 
 /* ============================================
@@ -838,7 +730,7 @@ body::before {
     }
 
     .navbar {
-        width: calc(100% - 280px);
+        right: 280px;
     }
 
     .timeline-section,
@@ -860,7 +752,7 @@ body::before {
     }
 
     .navbar {
-        width: 100%;
+        right: 0;
     }
 
     .timeline-section,
@@ -893,11 +785,6 @@ body::before {
     .timeline-item:nth-child(even) {
         flex-direction: column;
         gap: 30px;
-        padding-left: 40px;
-    }
-
-    .timeline-svg {
-        left: 0;
     }
 
     .timeline-text h3 {
@@ -933,10 +820,6 @@ body::before {
 
     .timeline-items {
         gap: 60px;
-    }
-
-    .timeline-item {
-        padding-left: 30px;
     }
 
     .footer {

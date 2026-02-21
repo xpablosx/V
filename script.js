@@ -4,9 +4,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initLoader();
-    initHeroBackground();
     initNavbar();
-    initTimeline();
+    initClickReveal();
+    initCarousels();
     initFooter();
 });
 
@@ -19,36 +19,7 @@ function initLoader() {
     
     setTimeout(() => {
         loader.classList.add('hidden');
-    }, 2000);
-}
-
-/* ============================================
-   HERO BACKGROUND - CUSTOMIZE AQUI
-   ============================================ */
-
-function initHeroBackground() {
-    const heroBg = document.getElementById('hero-bg');
-    
-    /* 
-    INSTRUÇÕES PARA CUSTOMIZAR:
-    
-    1. Coloque sua imagem desfocada na pasta do projeto com o nome "hero-bg.jfif"
-    2. Você pode ajustar o desfoque e brilho alterando as variáveis CSS:
-    
-    No arquivo style.css, procure por:
-    --hero-bg-image: url('hero-bg.jfif');
-    --hero-blur: 15px;
-    --hero-brightness: 0.6;
-    
-    Exemplos de customização:
-    - Para menos desfoque: --hero-blur: 8px;
-    - Para mais desfoque: --hero-blur: 25px;
-    - Para mais brilho: --hero-brightness: 0.8;
-    - Para menos brilho: --hero-brightness: 0.4;
-    */
-    
-    // A imagem será carregada automaticamente via CSS
-    heroBg.style.backgroundImage = 'url(hero-bg.jfif)';
+    }, 1500);
 }
 
 /* ============================================
@@ -86,59 +57,43 @@ function initNavbar() {
 }
 
 /* ============================================
-   TIMELINE
+   CLICK TO REVEAL
    ============================================ */
 
-function initTimeline() {
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    const timelinePath = document.querySelector('.timeline-path');
+function initClickReveal() {
+    const revealImages = document.querySelectorAll('.click-reveal .timeline-image');
 
-    timelineItems.forEach((item) => {
-        item.addEventListener('mouseenter', () => {
-            if (timelinePath) {
-                timelinePath.style.filter = 'drop-shadow(0 0 15px rgba(255, 255, 255, 0.3))';
-            }
-        });
-
-        item.addEventListener('mouseleave', () => {
-            if (timelinePath) {
-                timelinePath.style.filter = 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.1))';
+    revealImages.forEach(image => {
+        image.addEventListener('click', () => {
+            if (!image.classList.contains('revealed')) {
+                const imageSrc = image.dataset.image;
+                image.style.backgroundImage = `url('${imageSrc}')`;
+                image.classList.add('revealed');
             }
         });
     });
+}
 
-    // Observar itens para revelar conforme scroll
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
+/* ============================================
+   CAROUSELS 3D
+   ============================================ */
+
+function initCarousels() {
+    const carousels = document.querySelectorAll('.carousel-3d');
+
+    carousels.forEach(carousel => {
+        const track = carousel.querySelector('.carousel-track');
+        
+        if (track) {
+            // A animação é feita via CSS, mas podemos adicionar interatividade aqui
+            carousel.addEventListener('mouseenter', () => {
+                track.style.animationPlayState = 'running';
             });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        });
 
-        timelineItems.forEach(item => {
-            observer.observe(item);
-        });
-    }
-
-    // Adicionar efeito de parallax suave ao scroll
-    window.addEventListener('scroll', () => {
-        timelineItems.forEach((item, index) => {
-            const rect = item.getBoundingClientRect();
-            const scrolled = window.pageYOffset;
-            const elementOffset = item.offsetTop;
-            const distance = scrolled - elementOffset;
-            
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                const parallaxValue = distance * 0.05;
-                item.style.transform = `translateY(${parallaxValue}px)`;
-            }
-        });
+            carousel.addEventListener('mouseleave', () => {
+                track.style.animationPlayState = 'running';
+            });
+        }
     });
 }
 
@@ -212,10 +167,9 @@ if ('IntersectionObserver' in window) {
 
 function prefetchResources() {
     const imagesToPrefetch = [
-        'hero-bg.jfif',
         'V1.jfif', 'V2.jfif', 'V3.jfif', 'V4.jfif', 'V5.jfif',
         'V6.jfif', 'V7.jfif', 'V8.jfif', 'V9.jfif', 'V10.jfif',
-        'V11.jfif', 'V12.jfif', 'V13.jfif', 'V14.jfif', 'V15.jfif'
+        'V11.jfif', 'V12.jfif', 'V13.jfif', 'V14.jfif', 'V15.jfif', 'V16.jfif'
     ];
 
     imagesToPrefetch.forEach(image => {
@@ -305,4 +259,4 @@ window.addEventListener('scroll', throttle(revealOnScroll, 100));
    ============================================ */
 
 console.log('V - Experiência Digital Imersiva carregada com sucesso');
-console.log('Para customizar a imagem de fundo do Hero, veja as instruções em initHeroBackground()');
+console.log('Interações: Click Reveal, Carousel 3D, Hover Effects');

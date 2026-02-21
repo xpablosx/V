@@ -42,7 +42,7 @@
 
     <!-- HERO SECTION -->
     <section id="home" class="hero">
-        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-bg" id="hero-bg" style="background-image: url('V16.jfif');"></div>
         <div class="hero-content">
             <h1 class="hero-title">V</h1>
         </div>
@@ -53,182 +53,174 @@
         <!-- TIMELINE SECTION -->
         <section id="timeline" class="timeline-section">
             <div class="timeline-container">
-                <!-- Timeline Line SVG -->
-                <svg class="timeline-svg" viewBox="0 0 100 2000" preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:rgba(255,255,255,0.2);stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:rgba(255,255,255,0.4);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:rgba(255,255,255,0.2);stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path class="timeline-path" d="M 50 0 Q 50 100 40 150 Q 30 200 50 250 Q 70 300 50 350 Q 30 400 50 450 Q 70 500 50 550 Q 30 600 50 650 Q 70 700 50 750 Q 30 800 50 850 Q 70 900 50 950 Q 30 1000 50 1050 Q 70 1100 50 1150 Q 30 1200 50 1250 Q 70 1300 50 1350 Q 30 1400 50 1450 Q 70 1500 50 1550 Q 30 1600 50 1650 Q 70 1700 50 1750 Q 30 1800 50 1850 Q 70 1900 50 1950 Q 30 1980 50 2000" stroke="url(#timelineGradient)" stroke-width="2" fill="none" stroke-linecap="round" />
-                </svg>
-
                 <!-- Timeline Items -->
                 <div class="timeline-items">
-                    <!-- Item 1: Fade Reveal -->
-                    <div class="timeline-item fade-reveal" data-index="0">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V1.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Momento Inaugural</h3>
-                                <p>Uma captura do instante que marca o início de uma jornada extraordinária.</p>
+                    <!-- Item 1: Click to Reveal -->
+                    <div class="timeline-item click-reveal" data-index="0">
+                        <div class="timeline-image" data-image="V1.jfif">
+                            <div class="reveal-overlay">
+                                <span class="reveal-text">Clique para revelar</span>
                             </div>
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Momento Inaugural</h3>
+                            <p>Uma captura do instante que marca o início de uma jornada extraordinária.</p>
                         </div>
                     </div>
 
-                    <!-- Item 2: Slide In -->
-                    <div class="timeline-item slide-in" data-index="1">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V2.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Segredo Revelado</h3>
-                                <p>Uma sequência que se move continuamente, capturando a essência do tempo.</p>
-                            </div>
+                    <!-- Item 2: Hover Zoom -->
+                    <div class="timeline-item hover-zoom" data-index="1">
+                        <div class="timeline-image" style="background-image: url('V2.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Segredo Revelado</h3>
+                            <p>Uma sequência que se move continuamente, capturando a essência do tempo.</p>
                         </div>
                     </div>
 
-                    <!-- Item 3: Zoom Blur -->
-                    <div class="timeline-item zoom-blur" data-index="2">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V3.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Profundidade Dinâmica</h3>
-                                <p>Camadas de movimento que criam uma ilusão de profundidade.</p>
+                    <!-- Item 3: Carousel 3D -->
+                    <div class="timeline-item carousel-3d" data-index="2">
+                        <div class="carousel-container">
+                            <div class="carousel-track">
+                                <div class="carousel-item-img" style="background-image: url('V3.jfif');"></div>
+                                <div class="carousel-item-img" style="background-image: url('V3.jfif');"></div>
+                                <div class="carousel-item-img" style="background-image: url('V3.jfif');"></div>
                             </div>
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Profundidade Dinâmica</h3>
+                            <p>Camadas de movimento que criam uma ilusão de profundidade.</p>
                         </div>
                     </div>
 
-                    <!-- Item 4: Rotate Reveal -->
-                    <div class="timeline-item rotate-reveal" data-index="3">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V4.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Fluxo Contínuo</h3>
-                                <p>Uma sequência que se move continuamente e transforma constantemente.</p>
-                            </div>
+                    <!-- Item 4: Hover Glow -->
+                    <div class="timeline-item hover-glow" data-index="3">
+                        <div class="timeline-image" style="background-image: url('V4.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Fluxo Contínuo</h3>
+                            <p>Uma sequência que se move continuamente e transforma constantemente.</p>
                         </div>
                     </div>
 
-                    <!-- Item 5: Clip Path Reveal -->
-                    <div class="timeline-item clip-reveal" data-index="4">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V5.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Emergência Suave</h3>
-                                <p>Uma imagem que emerge lentamente da escuridão.</p>
-                            </div>
+                    <!-- Item 5: Scroll Reveal -->
+                    <div class="timeline-item scroll-reveal" data-index="4">
+                        <div class="timeline-image" style="background-image: url('V5.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Emergência Suave</h3>
+                            <p>Uma imagem que emerge lentamente da escuridão.</p>
                         </div>
                     </div>
 
-                    <!-- Item 6: Scale Bloom -->
-                    <div class="timeline-item scale-bloom" data-index="5">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V6.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Aproximação Progressiva</h3>
-                                <p>Uma imagem que se aproxima gradualmente, revelando detalhes ocultos.</p>
+                    <!-- Item 6: Click to Reveal -->
+                    <div class="timeline-item click-reveal" data-index="5">
+                        <div class="timeline-image" data-image="V6.jfif">
+                            <div class="reveal-overlay">
+                                <span class="reveal-text">Clique para revelar</span>
                             </div>
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Aproximação Progressiva</h3>
+                            <p>Uma imagem que se aproxima gradualmente, revelando detalhes ocultos.</p>
                         </div>
                     </div>
 
-                    <!-- Item 7: Glitch Distortion -->
-                    <div class="timeline-item glitch-distort" data-index="6">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V7.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Distorção Digital</h3>
-                                <p>Uma representação visual que desafia a realidade.</p>
-                            </div>
+                    <!-- Item 7: Hover Tilt -->
+                    <div class="timeline-item hover-tilt" data-index="6">
+                        <div class="timeline-image" style="background-image: url('V7.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Distorção Digital</h3>
+                            <p>Uma representação visual que desafia a realidade.</p>
                         </div>
                     </div>
 
-                    <!-- Item 8: Wave Distortion -->
-                    <div class="timeline-item wave-distort" data-index="7">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V8.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Rotação Infinita</h3>
-                                <p>Um ciclo perpétuo que captura a beleza do movimento cíclico.</p>
+                    <!-- Item 8: Carousel 3D -->
+                    <div class="timeline-item carousel-3d" data-index="7">
+                        <div class="carousel-container">
+                            <div class="carousel-track">
+                                <div class="carousel-item-img" style="background-image: url('V8.jfif');"></div>
+                                <div class="carousel-item-img" style="background-image: url('V8.jfif');"></div>
+                                <div class="carousel-item-img" style="background-image: url('V8.jfif');"></div>
                             </div>
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Rotação Infinita</h3>
+                            <p>Um ciclo perpétuo que captura a beleza do movimento cíclico.</p>
                         </div>
                     </div>
 
-                    <!-- Item 9: Blur Reveal -->
-                    <div class="timeline-item blur-reveal" data-index="8">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V9.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Descoberta Pessoal</h3>
-                                <p>Uma experiência interativa que convida você a participar ativamente.</p>
-                            </div>
+                    <!-- Item 9: Hover Blur -->
+                    <div class="timeline-item hover-blur" data-index="8">
+                        <div class="timeline-image" style="background-image: url('V9.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Descoberta Pessoal</h3>
+                            <p>Uma experiência interativa que convida você a participar ativamente.</p>
                         </div>
                     </div>
 
-                    <!-- Item 10: Pulse Glow -->
-                    <div class="timeline-item pulse-glow" data-index="9">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V10.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Batida Rítmica</h3>
-                                <p>Uma imagem que pulsa com vida própria, marcando o tempo.</p>
+                    <!-- Item 10: Click to Reveal -->
+                    <div class="timeline-item click-reveal" data-index="9">
+                        <div class="timeline-image" data-image="V10.jfif">
+                            <div class="reveal-overlay">
+                                <span class="reveal-text">Clique para revelar</span>
                             </div>
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Batida Rítmica</h3>
+                            <p>Uma imagem que pulsa com vida própria, marcando o tempo.</p>
                         </div>
                     </div>
 
-                    <!-- Item 11: Tilt Shift -->
-                    <div class="timeline-item tilt-shift" data-index="10">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V11.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Dualidade Revelada</h3>
-                                <p>Uma imagem que possui múltiplas perspectivas de uma única verdade.</p>
-                            </div>
+                    <!-- Item 11: Hover Scale -->
+                    <div class="timeline-item hover-scale" data-index="10">
+                        <div class="timeline-image" style="background-image: url('V11.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Dualidade Revelada</h3>
+                            <p>Uma imagem que possui múltiplas perspectivas de uma única verdade.</p>
                         </div>
                     </div>
 
-                    <!-- Item 12: Liquid Swipe -->
-                    <div class="timeline-item liquid-swipe" data-index="11">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V12.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Movimento Perpétuo</h3>
-                                <p>Uma sequência que nunca cessa, representando a continuidade eterna.</p>
+                    <!-- Item 12: Carousel 3D -->
+                    <div class="timeline-item carousel-3d" data-index="11">
+                        <div class="carousel-container">
+                            <div class="carousel-track">
+                                <div class="carousel-item-img" style="background-image: url('V12.jfif');"></div>
+                                <div class="carousel-item-img" style="background-image: url('V12.jfif');"></div>
+                                <div class="carousel-item-img" style="background-image: url('V12.jfif');"></div>
                             </div>
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Movimento Perpétuo</h3>
+                            <p>Uma sequência que nunca cessa, representando a continuidade eterna.</p>
                         </div>
                     </div>
 
-                    <!-- Item 13: Spotlight Reveal -->
-                    <div class="timeline-item spotlight-reveal" data-index="12">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V13.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Mistério Interativo</h3>
-                                <p>Uma imagem que aguarda sua intervenção, guardando segredos.</p>
+                    <!-- Item 13: Click to Reveal -->
+                    <div class="timeline-item click-reveal" data-index="12">
+                        <div class="timeline-image" data-image="V13.jfif">
+                            <div class="reveal-overlay">
+                                <span class="reveal-text">Clique para revelar</span>
                             </div>
+                        </div>
+                        <div class="timeline-text">
+                            <h3>Mistério Interativo</h3>
+                            <p>Uma imagem que aguarda sua intervenção, guardando segredos.</p>
                         </div>
                     </div>
 
-                    <!-- Item 14: Skew Reveal -->
-                    <div class="timeline-item skew-reveal" data-index="13">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V14.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Fluxo Líquido</h3>
-                                <p>Uma transição suave como água, criando uma experiência orgânica.</p>
-                            </div>
+                    <!-- Item 14: Hover Rotate -->
+                    <div class="timeline-item hover-rotate" data-index="13">
+                        <div class="timeline-image" style="background-image: url('V14.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Fluxo Líquido</h3>
+                            <p>Uma transição suave como água, criando uma experiência orgânica.</p>
                         </div>
                     </div>
 
-                    <!-- Item 15: 3D Flip -->
-                    <div class="timeline-item flip-3d" data-index="14">
-                        <div class="timeline-content">
-                            <div class="timeline-image" style="background-image: url('V15.jfif');"></div>
-                            <div class="timeline-text">
-                                <h3>Iluminação Focal</h3>
-                                <p>Uma imagem que emerge da escuridão através de um ponto de luz móvel.</p>
-                            </div>
+                    <!-- Item 15: Hover Skew -->
+                    <div class="timeline-item hover-skew" data-index="14">
+                        <div class="timeline-image" style="background-image: url('V15.jfif');"></div>
+                        <div class="timeline-text">
+                            <h3>Iluminação Focal</h3>
+                            <p>Uma imagem que emerge da escuridão através de um ponto de luz móvel.</p>
                         </div>
                     </div>
                 </div>
