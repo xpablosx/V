@@ -289,7 +289,7 @@ body::before {
 
 .hero {
     position: relative;
-    width: 100%;
+    width: calc(100% - 320px);
     height: 100vh;
     display: flex;
     align-items: center;
@@ -298,6 +298,7 @@ body::before {
     overflow: hidden;
     margin-top: -70px;
     padding-top: 70px;
+    margin-right: 320px;
 }
 
 .hero-bg {
@@ -375,17 +376,19 @@ body::before {
 
 .timeline-section {
     position: relative;
-    width: 100%;
+    width: calc(100% - 320px);
     padding: 120px 0;
     background-color: var(--color-black);
     margin-right: 320px;
 }
 
 .timeline-container {
+    width: 100%;
+    max-width: 1200px;
     position: relative;
-    max-width: 900px;
     margin: 0 auto;
     padding: 0 40px;
+    box-sizing: border-box;
 }
 
 /* Timeline Items Container */
