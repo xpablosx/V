@@ -18,6 +18,8 @@
     --z-loader: 9999;
     --z-navbar: 1000;
     --z-sidebar: 950;
+    --z-menu-toggle: 1001;
+    --z-overlay: 900;
 }
 
 /* ============================================
@@ -36,7 +38,7 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-    background-color: rgb(0, 0, 0);
+    background-color: var(--color-black);
     color: var(--color-white);
     line-height: 1.6;
     overflow-x: hidden;
@@ -56,6 +58,25 @@ body::before {
     z-index: 1;
 }
 
+/* Overlay para menu mobile */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: calc(var(--z-sidebar) - 1);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
 /* ============================================
    LOADER
    ============================================ */
@@ -66,7 +87,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color:transparent;
+    background-color: var(--color-black);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,16 +132,65 @@ body::before {
 }
 
 /* ============================================
+   MENU TOGGLE (HAMBÚRGUER) - MOBILE
+   ============================================ */
+
+.menu-toggle {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(11, 11, 11, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: var(--z-menu-toggle);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: var(--transition-fast);
+    backdrop-filter: blur(10px);
+}
+
+.menu-toggle:hover {
+    background-color: rgba(11, 11, 11, 0.98);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.menu-toggle span {
+    width: 20px;
+    height: 2px;
+    background-color: var(--color-white);
+    transition: var(--transition-fast);
+    border-radius: 1px;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translateY(10px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-10px);
+}
+
+/* ============================================
    SIDEBAR (DINÂMICA)
    ============================================ */
 
 .sidebar {
-    position: fixed;  /* Mudança: começa como relative */
-    right: 50000px;
-    top: 0px;
+    position: fixed;
+    right: 8000px;
+    top: auto;
     width: 320px;
-    height: auto;        /* Mudança: altura automática no fluxo normal */
-    background-color: rgba(0, 0, 0, 0.98);
+    height: auto;
+    background-color: rgba(11, 11, 11, 0.98);
     backdrop-filter: blur(10px);
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     z-index: var(--z-sidebar);
@@ -131,7 +201,7 @@ body::before {
     transition: position 0.3s ease-out, height 0.3s ease-out;
 }
 
-/* NOVO: Estado quando a sidebar fica fixa após scrollar do hero */
+/* Estado quando a sidebar fica fixa após scrollar do hero */
 .sidebar.is-fixed {
     position: fixed;
     right: 0;
@@ -155,7 +225,7 @@ body::before {
 
 .sidebar-header {
     padding: 20px;
-    border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -226,7 +296,7 @@ body::before {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;            /* Mudança: começa ocupando 100% no hero */
+    right: 0;
     height: 70px;
     background-color: transparent;
     z-index: var(--z-navbar);
@@ -242,7 +312,7 @@ body.sidebar-fixed .navbar {
 .navbar.scrolled {
     background-color: transparent;
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(53, 53, 53, 0.5);
+    box-shadow: 0 2px 20px rgba(80, 80, 80, 0.5);
 }
 
 .navbar-content {
@@ -392,7 +462,7 @@ body.sidebar-fixed .navbar {
 
 .timeline-section {
     position: relative;
-    width: 100%;          /* Começa com 100% no fluxo normal */
+    width: 100%;
     padding: 120px 0;
     background-color: var(--color-black);
     margin-right: 0;
@@ -752,7 +822,7 @@ body.sidebar-fixed .footer {
 }
 
 /* ============================================
-   RESPONSIVIDADE
+   RESPONSIVIDADE - TABLET (1024px)
    ============================================ */
 
 @media (max-width: 1024px) {
@@ -773,31 +843,64 @@ body.sidebar-fixed .footer {
     body.sidebar-fixed .navbar {
         right: 280px;
     }
+
+    .timeline-container {
+        padding: 0 30px;
+    }
 }
 
+/* ============================================
+   RESPONSIVIDADE - MOBILE (768px)
+   ============================================ */
+
 @media (max-width: 768px) {
+    /* Mostrar o botão de menu hambúrguer */
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Sidebar fica fora da tela por padrão */
     .sidebar {
         position: fixed;
         right: -100%;
+        top: 0;
         width: 100%;
         height: 100vh;
+        max-width: 320px;
+        border-left: none;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
         transition: right 0.4s ease-out;
+        z-index: var(--z-sidebar);
     }
 
+    /* Sidebar ativa (aberta) */
     .sidebar.active {
         right: 0;
     }
 
+    /* Remover o estado is-fixed no mobile */
     .sidebar.is-fixed {
         position: fixed;
-        right: 0;
+        right: -100%;
         width: 100%;
+        max-width: 320px;
+        height: 100vh;
     }
 
+    .sidebar.is-fixed.active {
+        right: 0;
+    }
+
+    /* Navbar volta ao normal no mobile */
     .navbar {
         right: 0;
     }
 
+    body.sidebar-fixed .navbar {
+        right: 0;
+    }
+
+    /* Timeline e footer ocupam 100% no mobile */
     body.sidebar-fixed .timeline-section,
     body.sidebar-fixed .footer,
     body.sidebar-relative .timeline-section,
@@ -808,6 +911,11 @@ body.sidebar-fixed .footer {
 
     .navbar-content {
         padding: 0 20px;
+    }
+
+    .navbar-logo {
+        font-size: 20px;
+        letter-spacing: 2px;
     }
 
     .navbar-menu {
@@ -826,11 +934,14 @@ body.sidebar-fixed .footer {
         gap: 80px;
     }
 
+    .timeline-item {
+        gap: 30px;
+    }
+
     .timeline-item,
     .timeline-item:nth-child(odd),
     .timeline-item:nth-child(even) {
         flex-direction: column;
-        gap: 30px;
     }
 
     .timeline-text h3 {
@@ -840,28 +951,61 @@ body.sidebar-fixed .footer {
     .timeline-text p {
         font-size: 13px;
     }
+
+    .hero-title {
+        letter-spacing: 10px;
+    }
+
+    .footer-text {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+
+    /* Menu toggle posicionamento no mobile */
+    .menu-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
 }
+
+/* ============================================
+   RESPONSIVIDADE - SMARTPHONE (480px)
+   ============================================ */
 
 @media (max-width: 480px) {
     .sidebar {
         width: 100%;
+        max-width: 100%;
     }
 
     .sidebar.is-fixed {
         width: 100%;
+        max-width: 100%;
     }
 
     .navbar-content {
         padding: 0 15px;
     }
 
+    .navbar-logo {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
     .navbar-menu {
-        gap: 15px;
+        gap: 12px;
     }
 
     .navbar-menu a {
-        font-size: 11px;
+        font-size: 10px;
         letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+        letter-spacing: 5px;
+        font-size: clamp(40px, 12vw, 100px);
     }
 
     .timeline-section {
@@ -872,7 +1016,66 @@ body.sidebar-fixed .footer {
         gap: 60px;
     }
 
+    .timeline-item {
+        gap: 20px;
+    }
+
+    .timeline-container {
+        padding: 0 15px;
+    }
+
+    .timeline-text h3 {
+        font-size: 14px;
+    }
+
+    .timeline-text p {
+        font-size: 12px;
+    }
+
     .footer {
         padding: 40px 0;
     }
+
+    .footer-text {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .footer-year {
+        font-size: 12px;
+    }
+
+    /* Menu toggle menor no smartphone */
+    .menu-toggle {
+        bottom: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .menu-toggle span {
+        width: 16px;
+        height: 1.5px;
+    }
+}
+
+/* ============================================
+   SCROLLBAR CUSTOMIZADO PARA SIDEBAR FIXA
+   ============================================ */
+
+.sidebar.is-fixed::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar.is-fixed::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar.is-fixed::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.sidebar.is-fixed::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
